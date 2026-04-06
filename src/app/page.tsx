@@ -43,7 +43,7 @@ export default function MarolesEventsPage() {
   
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useFramerScroll({ target: heroRef });
-  const y = useFramerTransform(scrollYProgress, [0, 1], ['0%', '15%']);
+  const y = useFramerTransform(scrollYProgress, [0, 1], ['0%', '0%']);
   const opacity = useFramerTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % images.length);
