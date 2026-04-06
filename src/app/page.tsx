@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion, useScroll as useFramerScroll, useTransform as useFramerTransform } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Menu, X, MapPin, Phone, Mail, Instagram, ChevronLeft, ChevronRight, Heart, Star, Calendar, Users, Camera, Music } from 'lucide-react';
 
 const images = [
@@ -40,11 +40,6 @@ export default function MarolesEventsPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentGallerySlide, setCurrentGallerySlide] = useState(0);
   const [hoveredGallery, setHoveredGallery] = useState<number | null>(null);
-  
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useFramerScroll({ target: heroRef });
-  const y = useFramerTransform(scrollYProgress, [0, 1], ['0%', '0%']);
-  const opacity = useFramerTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % images.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
@@ -134,23 +129,22 @@ export default function MarolesEventsPage() {
       </motion.nav>
 
       {/* Hero Section with Carousel */}
-      <section id="home" ref={heroRef} className="relative h-screen overflow-hidden">
-        <motion.div style={{ y }} className="absolute inset-0">
+      <section id="home" className="relative h-screen overflow-hidden">
+        {/* Background Images */}
+        <div className="absolute inset-0">
           {images.map((img, i) => (
             <div
               key={i}
-              className={`absolute inset-0 transition-opacity duration-1000 ${i === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 transition-opacity duration-700 ${i === currentSlide ? 'opacity-100' : 'opacity-0'}`}
             >
               <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/20 to-charcoal/50" />
             </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div 
-          style={{ opacity }}
-          className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6"
-        >
+        {/* Content */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -189,7 +183,7 @@ export default function MarolesEventsPage() {
               View Gallery
             </a>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* Carousel Controls */}
         <button onClick={prevSlide} className="absolute left-6 top-1/2 -translate-y-1/2 p-3 bg-cream/20 backdrop-blur-sm rounded-full hover:bg-cream/30 transition-colors">
