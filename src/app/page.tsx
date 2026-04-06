@@ -374,8 +374,7 @@ export default function MarolesEventsPage() {
           </div>
         </div>
       </section>
-        </div>
-      </section>
+        
 
       {/* Parallax Section */}
       <section className="relative py-32 overflow-hidden">
