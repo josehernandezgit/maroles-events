@@ -21,17 +21,24 @@ const services = [
 ];
 
 const gallery = [
-  { src: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80', category: 'Wedding' },
-  { src: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80', category: 'Reception' },
-  { src: 'https://images.unsplash.com/photo-1478146059778-26028b07395a?w=800&q=80', category: 'Celebration' },
-  { src: 'https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=800&q=80', category: 'Corporate' },
-  { src: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80', category: 'Party' },
-  { src: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80', category: 'Event' },
+  { src: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80', category: 'Wedding' },
+  { src: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1200&q=80', category: 'Reception' },
+  { src: 'https://images.unsplash.com/photo-1478146059778-26028b07395a?w=1200&q=80', category: 'Celebration' },
+  { src: 'https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=1200&q=80', category: 'Corporate' },
+  { src: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80', category: 'Party' },
+  { src: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1200&q=80', category: 'Event' },
+  { src: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=1200&q=80', category: 'Decoration' },
+  { src: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1200&q=80', category: 'Setup' },
+  { src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1200&q=80', category: 'Details' },
+  { src: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80', category: 'Conference' },
+  { src: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80', category: 'Lighting' },
+  { src: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&q=80', category: 'Live Music' },
 ];
 
 export default function MarolesEventsPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentGallerySlide, setCurrentGallerySlide] = useState(0);
   const [hoveredGallery, setHoveredGallery] = useState<number | null>(null);
   
   const heroRef = useRef<HTMLDivElement>(null);
@@ -41,6 +48,9 @@ export default function MarolesEventsPage() {
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % images.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
+  
+  const nextGallerySlide = () => setCurrentGallerySlide((prev) => (prev + 1) % gallery.length);
+  const prevGallerySlide = () => setCurrentGallerySlide((prev) => (prev - 1 + gallery.length) % gallery.length);
 
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -295,7 +305,7 @@ export default function MarolesEventsPage() {
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-24 md:py-32 px-6">
+      <section id="gallery" className="py-24 md:py-32 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -309,34 +319,61 @@ export default function MarolesEventsPage() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            {gallery.map((img, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-                className="relative overflow-hidden rounded-xl cursor-pointer group"
-                onMouseEnter={() => setHoveredGallery(i)}
-                onMouseLeave={() => setHoveredGallery(null)}
-              >
-                <img 
-                  src={img.src} 
-                  alt={img.category} 
-                  className="w-full aspect-[4/5] object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: hoveredGallery === i ? 1 : 0 }}
-                  className="absolute inset-0 bg-charcoal/60 flex items-center justify-center"
+          <div className="relative">
+            {/* Main Gallery Image */}
+            <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-2xl bg-slate-100">
+              {gallery.map((img, i) => (
+                <div
+                  key={i}
+                  className={`absolute inset-0 transition-opacity duration-700 ${i === currentGallerySlide ? 'opacity-100' : 'opacity-0'}`}
                 >
-                  <p className="font-serif text-cream text-xl">{img.category}</p>
-                </motion.div>
-              </motion.div>
-            ))}
+                  <img 
+                    src={img.src} 
+                    alt={img.category} 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-transparent to-transparent" />
+                  <div className="absolute bottom-8 left-8">
+                    <p className="font-serif text-3xl md:text-4xl text-cream">{img.category}</p>
+                    <p className="text-cream/70 text-sm mt-1">{i + 1} / {gallery.length}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Gallery Navigation Arrows */}
+            <button 
+              onClick={prevGallerySlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-4 bg-cream/90 backdrop-blur-sm rounded-full hover:bg-cream transition-all shadow-lg"
+            >
+              <ChevronLeft className="text-charcoal" size={28} />
+            </button>
+            <button 
+              onClick={nextGallerySlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-cream/90 backdrop-blur-sm rounded-full hover:bg-cream transition-all shadow-lg"
+            >
+              <ChevronRight className="text-charcoal" size={28} />
+            </button>
+
+            {/* Gallery Thumbnails */}
+            <div className="flex justify-center gap-2 mt-6 overflow-x-auto pb-2">
+              {gallery.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentGallerySlide(i)}
+                  className={`flex-shrink-0 w-16 h-12 md:w-20 md:h-14 rounded-lg overflow-hidden transition-all ${
+                    i === currentGallerySlide 
+                      ? 'ring-2 ring-champagne scale-105' 
+                      : 'opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <img src={img.src} alt={img.category} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
           </div>
+        </div>
+      </section>
         </div>
       </section>
 
