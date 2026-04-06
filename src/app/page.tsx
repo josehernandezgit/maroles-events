@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useScroll, useTransform, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, useScroll as useFramerScroll, useTransform as useFramerTransform } from 'framer-motion';
 import { Menu, X, MapPin, Phone, Mail, Instagram, ChevronLeft, ChevronRight, Heart, Star, Calendar, Users, Camera, Music } from 'lucide-react';
 
