@@ -186,10 +186,10 @@ export default function MarolesEventsPage() {
         </div>
 
         {/* Carousel Controls */}
-        <button onClick={prevSlide} className="absolute left-6 top-1/2 -translate-y-1/2 p-3 bg-cream/20 backdrop-blur-sm rounded-full hover:bg-cream/30 transition-colors">
+        <button onClick={prevSlide} className="absolute left-6 top-1/2 -translate-y-1/2 p-3 bg-cream/20 backdrop-blur-sm rounded-full hover:bg-cream/30 transition-colors z-20">
           <ChevronLeft className="text-cream" size={24} />
         </button>
-        <button onClick={nextSlide} className="absolute right-6 top-1/2 -translate-y-1/2 p-3 bg-cream/20 backdrop-blur-sm rounded-full hover:bg-cream/30 transition-colors">
+        <button onClick={nextSlide} className="absolute right-6 top-1/2 -translate-y-1/2 p-3 bg-cream/20 backdrop-blur-sm rounded-full hover:bg-cream/30 transition-colors z-20">
           <ChevronRight className="text-cream" size={24} />
         </button>
 
